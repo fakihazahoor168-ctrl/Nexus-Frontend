@@ -1,3 +1,119 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap');
+
+@layer base {
+  body {
+    font-family: 'Outfit', 'Inter', sans-serif;
+    @apply bg-gray-50 text-gray-900 antialiased;
+    background-image: 
+      radial-gradient(at 0% 0%, hsla(217,100%,94%,1) 0, transparent 50%), 
+      radial-gradient(at 50% 0%, hsla(217,100%,96%,1) 0, transparent 50%), 
+      radial-gradient(at 100% 0%, hsla(217,100%,93%,1) 0, transparent 50%);
+    background-attachment: fixed;
+  }
+}
+
+@layer utilities {
+  .slide-in {
+    animation: slideIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+  
+  .glass-panel {
+    @apply bg-white/70 backdrop-blur-xl border border-white/40 shadow-[0_8px_32px_rgba(0,0,0,0.04)] rounded-3xl;
+  }
+}
+
+@keyframes slideIn {
+  from { opacity: 0; transform: translateY(15px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Custom Scrollbar Premium UI */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* Premium React Calendar Overrides */
+.premium-calendar {
+  font-family: 'Outfit', sans-serif !important;
+  border: none !important;
+  width: 100% !important;
+}
+.premium-calendar .react-calendar__navigation {
+  margin-bottom: 1.5rem;
+}
+.premium-calendar .react-calendar__navigation button {
+  min-width: 44px;
+  background: transparent;
+  font-weight: 600;
+  font-size: 1.1rem;
+  color: #111827;
+  border-radius: 12px;
+  transition: all 0.2s ease;
+}
+.premium-calendar .react-calendar__navigation button:hover {
+  background: #eff6ff !important;
+  color: #2563eb;
+}
+.premium-calendar .react-calendar__month-view__weekdays {
+  font-weight: 600;
+  text-transform: uppercase;
+  color: #64748b;
+  font-size: 0.75rem;
+  margin-bottom: 0.5rem;
+  abbr { text-decoration: none; }
+}
+.premium-calendar .react-calendar__tile {
+  padding: 1rem 0.5rem;
+  border-radius: 12px;
+  font-weight: 500;
+  color: #334155;
+  transition: all 0.2s ease;
+  position: relative;
+}
+.premium-calendar .react-calendar__tile:hover {
+  background: #eff6ff !important;
+  color: #1d4ed8 !important;
+}
+.premium-calendar .react-calendar__tile--now {
+  background: #eff6ff !important;
+  color: #2563eb !important;
+  font-weight: 700;
+}
+.premium-calendar .react-calendar__tile--active {
+  background: #2563eb !important;
+  color: white !important;
+  box-shadow: 0 4px 14px rgba(37, 99, 235, 0.39) !important;
+  font-weight: 600;
+}
+.premium-calendar .react-calendar__tile--active:hover {
+  background: #1d4ed8 !important;
+}
+.premium-calendar .has-meeting::after {
+  content: '';
+  position: absolute;
+  bottom: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 5px;
+  height: 5px;
+  background-color: #f59e0b;
+  border-radius: 50%;
+}
+.premium-calendar .react-calendar__tile--active.has-meeting::after {
+  background-color: white;
+}
