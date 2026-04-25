@@ -15,6 +15,26 @@ export const RegisterPage: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   
+  const calculateStrength = (pass: string) => {
+    let score = 0;
+    if (!pass) return score;
+    if (pass.length > 8) score += 1;
+    if (/[a-z]/.test(pass) && /[A-Z]/.test(pass)) score += 1;
+    if (/\d/.test(pass)) score += 1;
+    if (/[^a-zA-Z\d]/.test(pass)) score += 1;
+    return score;
+  };
+
+  const strengthScore = calculateStrength(password);
+  
+  const getStrengthColor = () => {
+    if (strengthScore === 0) return 'bg-gray-200';
+    if (strengthScore === 1) return 'bg-red-500';
+    if (strengthScore === 2) return 'bg-yellow-500';
+    if (strengthScore === 3) return 'bg-green-500';
+    return 'bg-green-600';
+  };
+  
   const { register } = useAuth();
   const navigate = useNavigate();
   
@@ -122,15 +142,33 @@ export const RegisterPage: React.FC = () => {
               startAdornment={<Mail size={18} />}
             />
             
-            <Input
-              label="Password"
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-              fullWidth
-              startAdornment={<Lock size={18} />}
-            />
+            <div>
+              <Input
+                label="Password"
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+                fullWidth
+                startAdornment={<Lock size={18} />}
+              />
+              {password && (
+                <div className="mt-2">
+                  <div className="flex justify-between items-center mb-1 text-xs">
+                    <span className="text-gray-500">Password strength</span>
+                    <span className="font-medium text-gray-700">
+                      {['Weak', 'Weak', 'Fair', 'Good', 'Strong'][strengthScore]}
+                    </span>
+                  </div>
+                  <div className="w-full bg-gray-200 rounded-full h-1.5 flex gap-1">
+                    <div className={`h-1.5 rounded-full ${strengthScore >= 1 ? getStrengthColor() : 'bg-gray-200'} w-1/4 transition-colors duration-300`}></div>
+                    <div className={`h-1.5 rounded-full ${strengthScore >= 2 ? getStrengthColor() : 'bg-gray-200'} w-1/4 transition-colors duration-300`}></div>
+                    <div className={`h-1.5 rounded-full ${strengthScore >= 3 ? getStrengthColor() : 'bg-gray-200'} w-1/4 transition-colors duration-300`}></div>
+                    <div className={`h-1.5 rounded-full ${strengthScore >= 4 ? getStrengthColor() : 'bg-gray-200'} w-1/4 transition-colors duration-300`}></div>
+                  </div>
+                </div>
+              )}
+            </div>
             
             <Input
               label="Confirm password"

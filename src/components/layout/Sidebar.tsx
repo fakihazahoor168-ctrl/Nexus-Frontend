@@ -3,7 +3,7 @@ import { NavLink } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import { 
   Home, Building2, CircleDollarSign, Users, MessageCircle, 
-  Bell, FileText, Settings, HelpCircle, Calendar, Video, BookOpen
+  Bell, FileText, Settings, HelpCircle, Calendar, Video, BookOpen, Wallet
 } from 'lucide-react';
 
 interface SidebarItemProps {
@@ -13,11 +13,17 @@ interface SidebarItemProps {
 }
 
 const SidebarItem: React.FC<SidebarItemProps> = ({ to, icon, text }) => {
+  let walkthroughClass = '';
+  if (text === 'Dashboard') walkthroughClass = 'walkthrough-dashboard';
+  else if (text === 'Payments & Wallet') walkthroughClass = 'walkthrough-payments';
+  else if (text === 'Doc Chamber') walkthroughClass = 'walkthrough-documents';
+  else if (text === 'Meetings') walkthroughClass = 'walkthrough-meetings';
+
   return (
     <NavLink
       to={to}
       className={({ isActive }) => 
-        `flex items-center py-2.5 px-4 rounded-md transition-colors duration-200 ${
+        `flex items-center py-2.5 px-4 rounded-md transition-colors duration-200 ${walkthroughClass} ${
           isActive 
             ? 'bg-primary-50 text-primary-700' 
             : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900'
@@ -46,6 +52,7 @@ export const Sidebar: React.FC = () => {
     { to: '/document-chamber', icon: <BookOpen size={20} />, text: 'Doc Chamber' },
     { to: '/calendar', icon: <Calendar size={20} />, text: 'Calendar' },
     { to: '/video-call', icon: <Video size={20} />, text: 'Meetings' },
+    { to: '/payments', icon: <Wallet size={20} />, text: 'Payments & Wallet' },
   ];
   
   const investorItems = [
@@ -58,6 +65,7 @@ export const Sidebar: React.FC = () => {
     { to: '/document-chamber', icon: <BookOpen size={20} />, text: 'Doc Chamber' },
     { to: '/calendar', icon: <Calendar size={20} />, text: 'Calendar' },
     { to: '/video-call', icon: <Video size={20} />, text: 'Meetings' },
+    { to: '/payments', icon: <Wallet size={20} />, text: 'Payments & Wallet' },
   ];
   
   const sidebarItems = user.role === 'entrepreneur' ? entrepreneurItems : investorItems;
